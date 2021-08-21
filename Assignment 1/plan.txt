@@ -1,0 +1,43 @@
+After talking to sir, here is what I have realised.
+
+Report will be the first thing the TA looks at, it's kinda like a formal observations.txt. So we need to explain in brief whatever code + graphs we have submitted alongwith the answers obtained inside the report.
+
+Basically report is for making the job of the TA easier.
+
+Maintaining an overleaf doc for the report
+https://www.overleaf.com/project/61209229c59bc27444859339
+
+Plan here-
+
+Shashwat Leads- Q 1, 2, 4
+Arpon Leads- Q 3, 5
+
+Q1
+
+i) Code + Graph
+ii) Code + Graph
+iii) Code + Answers
+
+Everything above explained in the report
+
+Q2
+
+
+
+Q3
+
+
+
+Q4
+
+
+
+Q5
+
+
+
+Q6
+
+
+
+
