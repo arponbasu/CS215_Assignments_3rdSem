@@ -13,5 +13,6 @@ while count<size
         end
 end
 
-histogram2(x, y, DisplayStyle = "tile");
+plot = histogram2(x, y, DisplayStyle = "tile");
+saveas(plot, "Triangle.png"); 
 % histogram2(x, y);

@@ -12,7 +12,7 @@ C = generateSample(100000);
 
 %X = [CME(100,10);CME(100,100);CME(100,1000);CME(100,10000);CME(100,100000)];
 
-%boxplot(X.',{'10','100','1000','10000','100000'})
+boxplot(X.',{'10','100','1000','10000','100000'})
 %title('Error in mean versus sample size')
 %xlabel('Sample Size (Logarithmic Scale)')
 %ylabel('Mean Error')

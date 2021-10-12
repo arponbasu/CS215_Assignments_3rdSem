@@ -1,14 +1,10 @@
 load('mnist.mat');
 dt = im2double(digits_train);
-lfg = reshape(dt,784,1,60000);
-size(lfg);
+digit = reshape(dt,784,1,60000);
 
-labels_train(1);
 MeanVec = zeros(784,10);
 cnt = double(zeros(1,10));
-size(MeanVec(:,2));
-size(dt,3);
-size(cnt(10));
+
 for i = 1:size(dt,3)
     x = dt(:,:,i);
     y = reshape(x,784,1);
@@ -26,7 +22,7 @@ MeanVec;% This 784x10 array now contains the 10 784x1 mean vectors for the 10 di
 
 for i=1:60000
     l = labels_train(i)+1;
-    lfg(:,:,i) = lfg(:,:,i) - MeanVec(:,l);
+    digit(:,:,i) = digit(:,:,i) - MeanVec(:,l);
 end
 
 
@@ -38,8 +34,8 @@ end
 freeIndex = ones(10,1);
 
 
-for i = 1:size(lfg,3)
-    y = lfg(:,:,i);
+for i = 1:size(digit,3)
+    y = digit(:,:,i);
     l = 1 + labels_train(i);
     v{l}(:,freeIndex(l)) = y;
     freeIndex(l) = freeIndex(l) + 1;

@@ -14,5 +14,6 @@ while count<size
         end
 end
 
-histogram2(x, y, DisplayStyle = "tile");
+plot = histogram2(x, y, DisplayStyle = "tile");
+saveas(plot, "Ellipse.png"); 
 %histogram2(x, y);
