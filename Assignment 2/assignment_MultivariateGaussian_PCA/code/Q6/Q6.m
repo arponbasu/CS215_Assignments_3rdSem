@@ -1,5 +1,15 @@
-A = imread("data_fruit/image_1.png");
-dimensions = size(A);
+clear all;
+images = dir(fullfile("data_fruit/", '*.png'));
+list = cell(length(images), 1);
+
+for k = 1:length(images)
+    input_image = images(k).name;
+    list{k} = imread("data_fruit/"+input_image);
+    list{k} = im2double(list{k});
+end
+
+
+dimensions = size(list{1});
 length = prod(dimensions);
 oneD_image = reshape(A,[1,length]);
 oneD_image = double(oneD_image);
