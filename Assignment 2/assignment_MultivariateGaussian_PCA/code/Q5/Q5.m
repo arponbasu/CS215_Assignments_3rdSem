@@ -1,4 +1,4 @@
-clear all;
+clear;
 load('mnist.mat');
 dt = im2double(digits_train);
 digit = reshape(dt,784,1,60000);
@@ -42,55 +42,49 @@ for i = 1:size(digit,3)
     freeIndex(l) = freeIndex(l) + 1;
 end
 
-
-
-
 for i = 1:10
     k = size(v{i},2);
     v{i} = v{i}*(v{i}.')/k;
 end
-v; %This is a 10x1 cell, inside each cell of which is a 784x784 covariance matrix of a digit
 
-
-principalEigenvectors = zeros(784,10);
-principalEigenvalues = zeros(1,10);
-modesOfVariation = zeros(1,10);
-for i=1:10
-    [U,~,~] = svd(v{i});
-    principalEigenvectors(:,1:84, i) = U(:,1:84);
-    df = eig(v{i});
-    df = sort(df, 'descend');
-    principalEigenvalues(1:84, i) = df(1:84);
-%     m = max(df);
-%     modesOfVariation(i) = sum(df > 0.01*m); % Keeps only those eigenvalues which are atleast 1% of the maximum 
-end
-
-
-
-    
-% for i=1:10
-%     generated_images = MeanVec(:,i);
-%     generated_images = reshape(generated_images, [28, 28]);
-%     subplot(1,2,1),imshow(generated_images)
-%     figure();
-% end
-components = zeros(84,10);
+transform = cell(10,1);
+coord = cell(10,1);
 for i = 1:10
-    k=-1;
-    count=1;
-    while k~=(i-1)
-        count=count+1;
-        k=labels_test(count);
-    end
-    
-    image = digits_test(:,:,count);
-    image = im2double(image);
-    image = reshape(image,[1,784]);
-    
-    components(:,i) = image*principalEigenvectors(:,:,i);
-    components(:,i) = components(:,i)/norm(image);
+    [U,~,~] = svd(v{i});
+    V = normc(U(:,1:84));
+    coord{i} = V;
+    W = V*(V.');
+    transform{i} = W;
+end
+
+
+for i = 1:10
+    f1 = figure();
+    it = giveIndexOfDigit(i-1, labels_train);
+    str = "Digit " + num2str(i-1) + " and it's reconstruction";
+    subplot(1,3,1), imshow(dt(:,:,it))
+    subplot(1,3,2), imshow(reshape(reshape(dt(:,:,it),1,784)*transform{labels_train(it)+1},28,28))
+    sgtitle(str,'Color','red');
+    str = str + ".png";
+    saveas(f1,str);
 end
 
 
 
+function cc = calculateCoordinates(X, lab, coord) %X is a 28x28 pixel image, lab is it's label
+    t = reshape(X,1,784);
+    cc = t*coord{lab+1};
+end
+
+function reconstructImage(X, lab, transform) %X is a 28x28 pixel image, lab is it's label
+    subplot(1,2,1), imshow(X)
+    subplot(1,2,2), imshow(reshape(reshape(X,1,784)*transform{lab+1},28,28))
+end
+
+function iter = giveIndexOfDigit(i, labels_train)
+    iter = 1;
+    while labels_train(iter) ~= i
+        iter = iter + 1;
+    end
+end
 
