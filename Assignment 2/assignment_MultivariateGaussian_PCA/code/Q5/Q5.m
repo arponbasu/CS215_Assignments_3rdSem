@@ -66,10 +66,30 @@ for i=1:10
 end
 
 
-z = principalEigenvectors; %This contains the "principal mode of variation" (principal eigenvector) of each digit
-principalEigenvalues; %This contains the principal eigenvalue (largest eigenvalue) of each digit
-modesOfVariation; %This contains the number of most significant eigenvalues of each digit ("large eigenvalues")
 
+    
+% for i=1:10
+%     generated_images = MeanVec(:,i);
+%     generated_images = reshape(generated_images, [28, 28]);
+%     subplot(1,2,1),imshow(generated_images)
+%     figure();
+% end
+components = zeros(84,10);
+for i = 1:10
+    k=-1;
+    count=1;
+    while k~=(i-1)
+        count=count+1;
+        k=labels_test(count);
+    end
+    
+    image = digits_test(:,:,count);
+    image = im2double(image);
+    image = reshape(image,[1,784]);
+    
+    components(:,i) = image*principalEigenvectors(:,:,i);
+    components(:,i) = components(:,i)/norm(image);
+end
 
 
 
