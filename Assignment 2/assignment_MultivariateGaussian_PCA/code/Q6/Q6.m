@@ -58,16 +58,20 @@ end
 
 f4 = figure();
 p = randperm(16);
-subplot(1,3,1), imshow(reshape(rescale(MeanVec + (distort_vector(((image_vectors{p(1)} - MeanVec).')*PEV)*(PEV.')).'),80,80,3))
-subplot(1,3,2), imshow(reshape(rescale(MeanVec + (distort_vector(((image_vectors{p(2)} - MeanVec).')*PEV)*(PEV.')).'),80,80,3))
-subplot(1,3,3), imshow(reshape(rescale(MeanVec + (distort_vector(((image_vectors{p(3)} - MeanVec).')*PEV)*(PEV.')).'),80,80,3))
+d = diag(D);
+d = d(1:4);
+subplot(1,3,1), imshow(reshape(rescale(MeanVec + (distort_vector(((image_vectors{p(1)} - MeanVec).')*PEV,d)*(PEV.')).'),80,80,3))
+subplot(1,3,2), imshow(reshape(rescale(MeanVec + (distort_vector(((image_vectors{p(2)} - MeanVec).')*PEV,d)*(PEV.')).'),80,80,3))
+subplot(1,3,3), imshow(reshape(rescale(MeanVec + (distort_vector(((image_vectors{p(3)} - MeanVec).')*PEV,d)*(PEV.')).'),80,80,3))
 sgtitle("3 artificially generated fruit images",'Color','red');
 saveas(f4, "Artificially generated fruit images.png")
 
-function d = distort_vector(v)
-    arr = randn(1,size(v,2));
-    arr = arr + 1;
-    d = v.*arr;
+function d = distort_vector(v,D)
+    d = zeros(1,size(v,2)); 
+    for i = 1:size(v,2)
+        X = randn;
+        d(1,i) = X*sqrt(D(i)) + v(1,i);
+    end
 end
 
 
