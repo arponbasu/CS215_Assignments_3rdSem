@@ -62,8 +62,8 @@ for i = 1:10
     f1 = figure();
     it = giveIndexOfDigit(i-1, labels_train);
     str = "Digit " + num2str(i-1) + " and it's reconstruction";
-    subplot(1,3,1), imshow(dt(:,:,it))
-    subplot(1,3,2), imshow(reshape(reshape(dt(:,:,it),1,784)*transform{labels_train(it)+1},28,28))
+    subplot(1,2,1), imshow(dt(:,:,it))
+    subplot(1,2,2), imshow(reshape(reshape(dt(:,:,it),1,784)*transform{labels_train(it)+1},28,28))
     sgtitle(str,'Color','red');
     str = str + ".png";
     saveas(f1,str);
