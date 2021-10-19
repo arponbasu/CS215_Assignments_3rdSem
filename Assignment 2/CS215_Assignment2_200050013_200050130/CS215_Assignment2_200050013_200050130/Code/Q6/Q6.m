@@ -3,7 +3,7 @@ clear;
 images = cell(16,1);
 image_vectors = cell(16,1);
 for i = 1:16
-    images{i} = im2double(imread("data_fruit\image_" + num2str(i) + ".png"));
+    images{i} = im2double(imread(fullfile('data_fruit', strcat('image_', num2str(i), '.png'))));
     image_vectors{i} = reshape(images{i},19200,1);
 end
 
