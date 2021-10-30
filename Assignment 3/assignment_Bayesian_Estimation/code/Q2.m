@@ -10,26 +10,27 @@ for i = 1:n
     ML_errors(i,:) = x;
     PM_errors(i,:) = y;
 end
-
+position_1 = zeros(n, 1, 'double');
+position_2 = zeros(n, 1, 'double');
+for i = 1:n
+    position_1(i) = 4*i;
+    position_2(i) = 4*i+2;
+end
 v_str = cell(1,n);
 for i = 1:n
     v_str{i} = num2str(v{i});
 end
 
 f = figure();
-boxplot(ML_errors.',v_str)
-title('Error in ML Estimate versus sample size')
-xlabel('Sample Size')
-ylabel('Error in ML Estimate')
-saveas(f, "Boxplot of ML Estimate errors.png")
+b1 = boxplot(ML_errors.','positions', position_1,'labels', v_str, 'boxstyle', 'filled', 'color', 'r')
 
-
-f = figure();
-boxplot(PM_errors.',v_str)
-title('Error in Bayesian Estimate versus sample size')
+title('Error comparison of ML Estimate and Bayesian Estimate versus sample size')
 xlabel('Sample Size')
-ylabel('Error in Bayesian Estimate')
-saveas(f, "Boxplot of Bayesian Estimate errors.png")
+ylabel('Error')
+hold on
+b2 = boxplot(PM_errors.','positions', position_2,'labels', v_str, 'boxstyle', 'filled', 'color', 'b')
+hLegend = legend([b1(1), b2(1)], {'MLE','Bayesian'});
+saveas(f, "Q2.png")
 
 
 function [eaML, eaPM] = error_arr (N)

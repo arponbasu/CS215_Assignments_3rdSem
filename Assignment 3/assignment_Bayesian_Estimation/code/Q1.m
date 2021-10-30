@@ -1,4 +1,4 @@
-clear;
+clear all;
 rng(1);
 std_dev = 4;
 mean_val= 10;
@@ -7,6 +7,14 @@ n = size(v,2);
 ML_errors = zeros(n,100,'double');
 PM_errors_1 = zeros(n,100,'double');
 PM_errors_2 = zeros(n,100,'double');
+position_1 = zeros(n, 1, 'double');
+position_2 = zeros(n, 1, 'double');
+position_3 = zeros(n, 1, 'double');
+for i = 1:n
+    position_1(i) = 6*i;
+    position_2(i) = 6*i+2;
+    position_3(i) = 6*i+4;
+end
 
 for i = 1:n
     [x,y,z] = error_arr(v{i}, mean_val, std_dev);
@@ -21,26 +29,21 @@ for i = 1:n
 end
 
 f = figure();
-boxplot(ML_errors.',v_str)
-title('Error in ML Estimate versus sample size')
+b1= boxplot(ML_errors.','positions', position_1,'labels', v_str, 'boxstyle', 'filled', 'color', 'r');
+title('Error in different Estimates versus sample size')
 xlabel('Sample Size')
 ylabel('Error in ML Estimate')
-saveas(f, "Boxplot of ML Estimate errors.png")
 
+hold on
 
-f = figure();
-boxplot(PM_errors_1.',v_str)
-title('Error in Bayesian Estimate versus sample size- Prior1')
-xlabel('Sample Size')
-ylabel('Error in Bayesian Estimate')
-saveas(f, "Boxplot of Bayesian Estimate errors- Prior1.png")
+b2= boxplot(PM_errors_1.','positions', position_2,'labels', v_str, 'boxstyle', 'filled', 'color', 'g');
 
-f = figure();
-boxplot(PM_errors_2.',v_str)
-title('Error in Bayesian Estimate versus sample size- Prior2')
-xlabel('Sample Size')
-ylabel('Error in Bayesian Estimate')
-saveas(f, "Boxplot of Bayesian Estimate errors- Prior2.png")
+hold on
+
+b3= boxplot(PM_errors_2.','positions', position_3,'labels', v_str, 'boxstyle', 'filled', 'color', 'b');
+hLegend = legend([b1(1), b2(1), b3(1)], {'MLE','Bayesian with Gaussian Prior', 'Bayesian with Uniform Prior'});
+
+saveas(f, "Q1.png")
 
 function [eaML, eaPM_1, eaPM_2] = error_arr (N, mean_val, std_dev)
     eaML = zeros(100,1,'double');
